@@ -1,0 +1,43 @@
+.header__link {
+  text-decoration: none;
+}
+
+.header__container {
+  font-size: 60px;
+  color: black;
+  background-color: blueviolet;
+  height: 80px;
+  line-height: 70px;
+}
+
+.moods__list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mood__happy {
+  height: 50px;
+  width: 50px;
+  line-height: 45px;
+  text-align: center;
+  border-radius: 50%;
+  background-color:yellow;
+  color: black;
+  font-size: 28px;
+  margin: 5px;
+  transform: rotate(90deg);
+}
+
+.mood__sad {
+  height: 50px;
+  width: 50px;
+  line-height: 45px;
+  text-align: center;
+  border-radius: 50%;
+  background-color:orange;
+  color: white;
+  font-size: 28px;
+  margin: 5px;
+  transform: rotate(90deg);
+}

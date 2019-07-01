@@ -1,35 +1,47 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Details extends React.Component {
+
   render() {
+    const {handleSetDate, handleSetMood} = this.props;
+
+
     return (
       <div className="details">
 
       <div className="block__calendar">
         <label htmlFor="calendar">Fecha</label>
-        <input type="date" id="calendar" className="calendar"/>
+        <input 
+          type="date" 
+          id="calendar" 
+          className="calendar"
+          onChange={handleSetDate}
+        />
       </div>
 
-      <div className="block__state">
+      <div className="block__mood">
         <h3>Estado:</h3>
         <div>
-          <label htmlFor="state1">
+          <label htmlFor="mood1">
             <input
-              id="state1"
+              id="mood1"
               type="radio"
-              value="happy"
-              name="states"
+              value=":)"
+              name="moodes"
+              onChange={handleSetMood}
             />
             :)
           </label>
         </div>
         <div>
-          <label htmlFor="state2">
+          <label htmlFor="mood2">
             <input
-              id="state2"
+              id="mood2"
               type="radio"
-              value="sad"
-              name="states"
+              value=":("
+              name="moodes"
+              onChange={handleSetMood}
             />
             :(
           </label>
@@ -41,7 +53,9 @@ class Details extends React.Component {
           <input type="text" id="message" className="message"/>
         </div>
 
-        <button className="btn__save btn">GUARDAR</button>
+        <Link className="header__link" to= {'/'}>
+          <button className="btn__save btn">GUARDAR</button>
+        </Link>
         <button className="btn__cancel btn">CENCELAR</button>
       </div>
     );
