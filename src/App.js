@@ -9,12 +9,14 @@ class App extends React.Component {
     super(props);
 
     this.state=({
-      date: [],
-      mood: []
+      date: '',
+      mood: '',
+      moodsList:[]
     })
 
     this.handleSetDate = this.handleSetDate.bind(this);
     this.handleSetMood = this.handleSetMood.bind(this);
+    this.handleSave = this.handleSave.bind(this);
   }
 
   handleSetDate(event) {
@@ -22,12 +24,13 @@ class App extends React.Component {
 
     this.setState(prevState => {
       return {
-        date: [...prevState.date, dateSelected]
+        date: dateSelected
+        // date: [...prevState.date, dateSelected]
         // [prevState.date.push(dateSelected)]
       };
     });
 
-    console.log('^', this.state.date);
+    console.log('^', this.state.date, dateSelected);
   }
 
   handleSetMood(event) {
@@ -35,16 +38,31 @@ class App extends React.Component {
 
     this.setState(prevState => {
       return {
-        mood: [...prevState.mood, moodSelected]
+        mood: moodSelected
+        // mood: [...prevState.mood, moodSelected]
       };
     });
 
-    console.log('*', this.state.mood);
+    console.log('*', this.state.mood, moodSelected);
   }
 
+  handleSave() {
+    const {date, mood} = this.state;
+    const moodsObj= {date, mood};
+    const newMoods = [...this.state.moodsList, moodsObj]
 
+    this.setState(prevState => {
+      return ({
+        moodsList: newMoods
+      });
+    })
+
+  }
+  
+  
   render() {
-  const {mood} = this.state;
+  console.log('**^^', this.state.moodsList);
+  const {moodsList} = this.state;
 
     return (
       <div className="app">
@@ -53,7 +71,8 @@ class App extends React.Component {
             exact path="/"
             render={() => (
               <Home
-                mood={mood}
+                moodsList={moodsList}
+
               />
             )}
           />
@@ -63,6 +82,7 @@ class App extends React.Component {
               <Details
                 handleSetDate={this.handleSetDate}
                 handleSetMood={this.handleSetMood}
+                handleSave={this.handleSave}
               />
             )}
           />

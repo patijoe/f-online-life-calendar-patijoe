@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 class Home extends React.Component {
   render() {
-    const {mood} = this.props;
+    const {moodsList} = this.props;
 
     return (
       <div className="home">
@@ -15,9 +15,9 @@ class Home extends React.Component {
         <main className="home__main">
           <div className="moods__main">
             <ul className="moods__list">
-              {mood.map((item, index) => {
+              {moodsList.map((item, index) => {
                 return(
-                  <li className={item === ':)' ? "mood__happy" : "mood__sad"} key={index}>{item}</li>
+                  <li className={item.mood === ':)' ? "mood__happy" : "mood__sad"} key={index}>{item.mood}</li>
                 );
               })}
             </ul>
