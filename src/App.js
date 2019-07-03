@@ -11,7 +11,7 @@ class App extends React.Component {
     this.state=({
       date: '',
       mood: '',
-      moodsList:[]
+      moodsList: JSON.parse(localStorage.getItem('moodsList')) || []
     })
 
     this.handleSetDate = this.handleSetDate.bind(this);
@@ -20,17 +20,28 @@ class App extends React.Component {
   }
 
   handleSetDate(event) {
+    const {moodsList} = this.state;
     const dateSelected = event.currentTarget.value;
 
-    this.setState(prevState => {
-      return {
-        date: dateSelected
-        // date: [...prevState.date, dateSelected]
-        // [prevState.date.push(dateSelected)]
-      };
-    });
+    
+    if(moodsList.length !== 0) {
+      const uniqueDate = moodsList.some(dateSelected);
+      console.log('??', uniqueDate);
 
-    console.log('^', this.state.date, dateSelected);
+      if(uniqueDate !== undefined) {
+        this.setState(prevState => {
+          return {
+            date: uniqueDate
+          };
+        });
+        
+      } else {
+        this.setState({
+          date: dateSelected
+        })
+      }
+    }
+    
   }
 
   handleSetMood(event) {
@@ -39,26 +50,24 @@ class App extends React.Component {
     this.setState(prevState => {
       return {
         mood: moodSelected
-        // mood: [...prevState.mood, moodSelected]
       };
     });
-
-    console.log('*', this.state.mood, moodSelected);
   }
 
   handleSave() {
-    const {date, mood} = this.state;
+    const {date, mood, moodsList} = this.state;
     const moodsObj= {date, mood};
     const newMoods = [...this.state.moodsList, moodsObj]
-
+        
     this.setState(prevState => {
       return ({
         moodsList: newMoods
-      });
+      }
+      );
     })
-
+    localStorage.setItem('moodsList', JSON.stringify(moodsList));
   }
-  
+
   
   render() {
   console.log('**^^', this.state.moodsList);
