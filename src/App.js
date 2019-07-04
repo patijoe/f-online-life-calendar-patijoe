@@ -11,12 +11,14 @@ class App extends React.Component {
     this.state=({
       date: '',
       mood: '',
-      moodsList:[]
+      message: '',
+      moodsList:JSON.parse(localStorage.getItem('moodsList')) || []
     })
 
     this.handleSetDate = this.handleSetDate.bind(this);
     this.handleSetMood = this.handleSetMood.bind(this);
     this.handleSave = this.handleSave.bind(this);
+    this.handleSetMessage = this.handleSetMessage.bind(this);
   }
 
   uniqueDay() {
@@ -25,18 +27,13 @@ class App extends React.Component {
 
   handleSetDate(event) {
     const {moodsList} = this.state;
-    const dateSelected = event.currentTarget.value;
-
-    this.setState(prevState => {
-      return {
-        date: dateSelected
-      };
-    });
+    const dateSelected = event.currentTarget.value; // });
 
     console.log('^', dateSelected);
 
     if(moodsList.length!==0) {
       const repeatedDate = moodsList.some(item => item.date===dateSelected);
+
        if(repeatedDate===false) {
         this.setState(prevState => {
           return {
@@ -46,7 +43,7 @@ class App extends React.Component {
        } else {
         this.setState(prevState => {
           return {
-            date: null
+            date: ''
           };
         })
        }
@@ -75,26 +72,43 @@ class App extends React.Component {
     console.log('*', this.state.mood, moodSelected);
   }
 
+  handleSetMessage(event) {
+    const messageHappyDay = event.currentTarget.value;
+
+    this.setState(prevState=> {
+    return{
+      message: messageHappyDay
+    }
+    })
+  }
+
   handleSave() {
-    const {date, mood} = this.state;
-    const moodsObj= {date, mood};
+    const {date, mood, message} = this.state;
+    const moodsObj= {date, mood, message};
     const newMoods = [...this.state.moodsList, moodsObj]
 
-    if (date !== '' && date !== null && mood !== '') {
+    if (date !== '' && mood !== '') {
       this.setState(prevState => {
         return ({
           moodsList: newMoods
-        });
+        });      
       })
-    } else {
-      console.log('es posible que ya hayas escogido la fecha o q hayas olvidado poner el estado de ánimo')
+
+      localStorage.setItem('moodsList', JSON.stringify(newMoods));
+      
+    } else if (date === '') {
+      alert ('es posible que ya hayas escogido la fecha')
+
+    } else if (mood === '') {
+      alert ('es posible que hayas olvidado poner el estado de ánimo') 
     }
+    
   }
   
   
   render() {
   console.log('**^^', this.state.moodsList);
-  const {moodsList} = this.state;
+  const {moodsList, mood, message} = this.state;
 
     return (
       <div className="app">
@@ -114,7 +128,10 @@ class App extends React.Component {
               <Details
                 handleSetDate={this.handleSetDate}
                 handleSetMood={this.handleSetMood}
+                handleSetMessage={this.handleSetMessage}
                 handleSave={this.handleSave}
+                mood={mood}
+                message={message}
               />
             )}
           />

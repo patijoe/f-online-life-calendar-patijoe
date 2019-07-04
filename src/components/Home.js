@@ -17,7 +17,7 @@ class Home extends React.Component {
             <ul className="moods__list">
               {moodsList.map((item, index) => {
                 return(
-                  <li className={item.mood === ':)' ? "mood__happy" : "mood__sad"} key={index}>{item.mood}</li>
+                  <li className={item.mood === ':)' ? "mood__happy" : "mood__sad"} key={index} title={item.date +' / '+ item.message}>{item.mood}</li>
                 );
               })}
             </ul>

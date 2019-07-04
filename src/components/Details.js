@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 class Details extends React.Component {
 
   render() {
-    const {handleSetDate, handleSetMood, handleSave} = this.props;
+    const {handleSetDate, handleSetMood, handleSetMessage, handleSave, mood} = this.props;
 
 
     return (
@@ -49,14 +49,14 @@ class Details extends React.Component {
         </div>
 
         <div className="block__message">
-          <label htmlFor="mesagge" className="message">Mensaje</label>
-          <input type="text" id="message" className="message"/>
+          <label htmlFor="mesagge" className={`${mood === ':)' ? 'mesagge' : 'hidden'}`}>Mensaje</label>
+          <input type="text" id="message" className={`${mood === ':)' ? 'mesagge' : 'hidden'}`} onChange={handleSetMessage}/>
         </div>
 
         <Link className="header__link" to= {'/'}>
           <button className="btn__save btn" onClick={handleSave}>GUARDAR</button>
         </Link>
-        <button className="btn__cancel btn">CENCELAR</button>
+        <button className="btn__cancel btn">CANCELAR</button>
       </div>
     );
   }
