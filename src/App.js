@@ -19,18 +19,48 @@ class App extends React.Component {
     this.handleSave = this.handleSave.bind(this);
   }
 
+  uniqueDay() {
+    
+  }
+
   handleSetDate(event) {
+    const {moodsList} = this.state;
     const dateSelected = event.currentTarget.value;
 
     this.setState(prevState => {
       return {
         date: dateSelected
-        // date: [...prevState.date, dateSelected]
-        // [prevState.date.push(dateSelected)]
       };
     });
 
-    console.log('^', this.state.date, dateSelected);
+    console.log('^', dateSelected);
+
+    if(moodsList.length!==0) {
+      const repeatedDate = moodsList.some(item => item.date===dateSelected);
+       if(repeatedDate===false) {
+        this.setState(prevState => {
+          return {
+            date: dateSelected
+          };
+        });
+       } else {
+        this.setState(prevState => {
+          return {
+            date: null
+          };
+        })
+       }
+
+      console.log(repeatedDate);
+    } else {
+      this.setState(prevState => {
+        return {
+          date: dateSelected
+        };
+      });
+      
+      console.log('no ha nada');
+    }
   }
 
   handleSetMood(event) {
@@ -39,7 +69,6 @@ class App extends React.Component {
     this.setState(prevState => {
       return {
         mood: moodSelected
-        // mood: [...prevState.mood, moodSelected]
       };
     });
 
@@ -51,12 +80,15 @@ class App extends React.Component {
     const moodsObj= {date, mood};
     const newMoods = [...this.state.moodsList, moodsObj]
 
-    this.setState(prevState => {
-      return ({
-        moodsList: newMoods
-      });
-    })
-
+    if (date !== '' && date !== null && mood !== '') {
+      this.setState(prevState => {
+        return ({
+          moodsList: newMoods
+        });
+      })
+    } else {
+      console.log('es posible que ya hayas escogido la fecha o q hayas olvidado poner el estado de ánimo')
+    }
   }
   
   
